@@ -3,7 +3,7 @@ from typing import Any
 import pytest
 import numpy as np
 
-from albucore.functions import from_float, from_float_numpy, from_float_opencv, to_float_numpy, to_float_opencv, to_float_lut, to_float, MAX_VALUES_BY_DTYPE
+from algocore.functions import from_float, from_float_numpy, from_float_opencv, to_float_numpy, to_float_opencv, to_float_lut, to_float, MAX_VALUES_BY_DTYPE
 import cv2
 
 CHANNELS = [1, 3, 5]

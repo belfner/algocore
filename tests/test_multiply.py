@@ -2,9 +2,9 @@ import pytest
 import numpy as np
 
 
-from albucore.utils import MAX_OPENCV_WORKING_CHANNELS, clip
+from algocore.utils import MAX_OPENCV_WORKING_CHANNELS, clip
 
-from albucore import (
+from algocore import (
     multiply_lut,
     multiply_numpy,
     multiply_opencv,

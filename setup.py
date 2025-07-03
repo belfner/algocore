@@ -38,6 +38,6 @@ def get_install_requirements(install_requires: list[str], choose_install_require
     return install_requires
 
 setup(
-    packages=find_packages(exclude=["tests", "benchmark"], include=['albucore*']),
+    packages=find_packages(exclude=["tests", "benchmark"], include=['algocore*']),
     install_requires=get_install_requirements(INSTALL_REQUIRES, CHOOSE_INSTALL_REQUIRES),
 )

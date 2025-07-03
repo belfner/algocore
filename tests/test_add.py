@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from albucore.utils import clip
-from albucore import (
+from algocore.utils import clip
+from algocore import (
     add_lut,
     add_numpy,
     add_opencv,

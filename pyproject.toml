@@ -4,16 +4,16 @@ build-backend = "setuptools.build_meta"
 requires = [ "setuptools>=45", "wheel" ]
 
 [project]
-name = "albucore"
+name = "algocore"
 version = "0.0.28"
 
 description = "High-performance image processing functions for deep learning and computer vision."
 readme = "README.md"
 keywords = [ "deep learning", "image processing" ]
 license = { file = "LICENSE" }
-maintainers = [ { name = "Vladimir Iglovikov" } ]
+maintainers = [ { name = "Ben Elfner", email = "algorave@belfner.com" } ]
 
-authors = [ { name = "Vladimir Iglovikov" } ]
+authors = [ { name = "Ben Elfner", email = "algorave@belfner.com" } ]
 requires-python = ">=3.9"
 
 classifiers = [
@@ -39,13 +39,13 @@ dynamic = [ "dependencies" ]
 
 [tool.setuptools]
 packages = { find = { include = [
-  "albucore*",
+  "algocore*",
 ], exclude = [
   "tests",
   "benchmark",
 ] } }
 
-package-data = { albumentations = [ "*.txt", "*.md" ] }
+package-data = { algocore = [ "*.txt", "*.md" ] }
 
 [tool.setuptools.exclude-package-data]
 "*" = [ "tests*", "tools*", "benchmark*", "conda.recipe*" ]

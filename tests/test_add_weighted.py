@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from albucore.functions import add, add_numpy, add_opencv, add_weighted, add_weighted_numpy, add_weighted_opencv, add_weighted_lut, add_weighted_simsimd
-from albucore.utils import clip
+from algocore.functions import add, add_numpy, add_opencv, add_weighted, add_weighted_numpy, add_weighted_opencv, add_weighted_lut, add_weighted_simsimd
+from algocore.utils import clip
 
 @pytest.mark.parametrize(
     "img1, weight1, img2, weight2, expected_output",

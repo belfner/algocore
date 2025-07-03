@@ -16,8 +16,8 @@ import torch
 import torchvision.transforms.v2.functional as torchf
 from tqdm import tqdm
 
-import albucore
-from albucore.utils import MAX_VALUES_BY_DTYPE, MONO_CHANNEL_DIMENSIONS, NUM_MULTI_CHANNEL_DIMENSIONS, clip
+import algocore
+from algocore.utils import MAX_VALUES_BY_DTYPE, MONO_CHANNEL_DIMENSIONS, NUM_MULTI_CHANNEL_DIMENSIONS, clip
 from benchmark.utils import MarkdownGenerator, format_results, get_markdown_table, torch_clip
 
 cv2.setNumThreads(0)

@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from albucore.functions import power, power_numpy, power_opencv, power_lut
-from albucore.utils import MAX_OPENCV_WORKING_CHANNELS, convert_value, clip
+from algocore.functions import power, power_numpy, power_opencv, power_lut
+from algocore.utils import MAX_OPENCV_WORKING_CHANNELS, convert_value, clip
 
 
 @pytest.mark.parametrize(

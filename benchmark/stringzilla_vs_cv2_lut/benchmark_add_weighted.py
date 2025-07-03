@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from albucore.functions import add_weighted_opencv, add_weighted_simsimd
+from algocore.functions import add_weighted_opencv, add_weighted_simsimd
 from benchmark.utils import get_cpu_info
 
 cv2.setNumThreads(0)

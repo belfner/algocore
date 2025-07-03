@@ -1,9 +1,9 @@
 import numpy as np
 import pytest
 import cv2
-from albucore.decorators import contiguous
-from albucore.functions import float32_io, from_float, to_float, uint8_io
-from albucore.utils import NPDTYPE_TO_OPENCV_DTYPE, clip, convert_value, get_opencv_dtype_from_numpy, get_num_channels, is_grayscale_image, get_image_data
+from algocore.decorators import contiguous
+from algocore.functions import float32_io, from_float, to_float, uint8_io
+from algocore.utils import NPDTYPE_TO_OPENCV_DTYPE, clip, convert_value, get_opencv_dtype_from_numpy, get_num_channels, is_grayscale_image, get_image_data
 
 
 @pytest.mark.parametrize("input_img, dtype, expected", [

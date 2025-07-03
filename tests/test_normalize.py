@@ -1,8 +1,8 @@
 import pytest
 import numpy as np
 
-from albucore.functions import normalize, normalize_numpy, normalize_opencv, normalize_lut
-from albucore.utils import MAX_VALUES_BY_DTYPE, convert_value, get_num_channels
+from algocore.functions import normalize, normalize_numpy, normalize_opencv, normalize_lut
+from algocore.utils import MAX_VALUES_BY_DTYPE, convert_value, get_num_channels
 from numpy.testing import assert_array_almost_equal_nulp
 
 

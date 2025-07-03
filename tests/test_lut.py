@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 import cv2
-from albucore.functions import sz_lut
+from algocore.functions import sz_lut
 
 @pytest.mark.parametrize("shape", [
     (10, 10),

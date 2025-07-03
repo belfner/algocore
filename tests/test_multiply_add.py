@@ -1,8 +1,8 @@
 import pytest
 import numpy as np
 import cv2
-from albucore.functions import multiply_add, multiply_add_numpy, multiply_add_opencv, multiply_add_lut
-from albucore.utils import MAX_OPENCV_WORKING_CHANNELS, clip
+from algocore.functions import multiply_add, multiply_add_numpy, multiply_add_opencv, multiply_add_lut
+from algocore.utils import MAX_OPENCV_WORKING_CHANNELS, clip
 
 @pytest.mark.parametrize(
     "img, value, factor, expected_output",

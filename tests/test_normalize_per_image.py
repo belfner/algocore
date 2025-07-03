@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 
-from albucore.functions import (
+from algocore.functions import (
     normalize_per_image_opencv,
     normalize_per_image_numpy,
     normalize_per_image_lut,

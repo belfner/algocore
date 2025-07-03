@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 # Import the functions to test
-from albucore.decorators import (
+from algocore.decorators import (
     reshape_3d, restore_from_spatial, restore_from_channel, reshape_for_spatial, reshape_for_channel
 )
 
