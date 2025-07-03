@@ -11,13 +11,13 @@ Number of images: 500
 
 ## Package Versions
 
-| Python                                | albucore   | opencv-python-headless   | numpy   | torchvision   |
+| Python                                | algocore   | opencv-python-headless   | numpy   | torchvision   |
 |:--------------------------------------|:-----------|:-------------------------|:--------|:--------------|
 | 3.9.20 (main, Oct  3 2024, 02:24:59)  | 0.0.20     | 4.10.0.84                | 2.0.2   | 0.19.1        |
 | [Clang 14.0.6 ]                       |            |                          |         |               |
 
 ## Performance (images/second)
 
-|           | albucore       | lut            | opencv       | numpy         | simsimd   |
+|           | algocore       | lut            | opencv       | numpy         | simsimd   |
 |:----------|:---------------|:---------------|:-------------|:--------------|:----------|
 | AddVector | 842.56 ± 24.65 | 773.58 ± 17.09 | 88.11 ± 1.94 | 190.86 ± 2.37 | N/A       |

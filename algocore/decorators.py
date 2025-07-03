@@ -4,7 +4,7 @@ from typing import Any, Callable, Literal, TypeVar, cast
 
 import numpy as np
 
-from albucore.utils import MONO_CHANNEL_DIMENSIONS, NUM_MULTI_CHANNEL_DIMENSIONS, P
+from algocore.utils import MONO_CHANNEL_DIMENSIONS, NUM_MULTI_CHANNEL_DIMENSIONS, P
 
 if sys.version_info >= (3, 10):
     from typing import Concatenate

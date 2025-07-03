@@ -1,15 +1,15 @@
-# Albucore Benchmark
+# Algocore Benchmark
 
-This benchmark suite evaluates the performance of various image processing operations implemented in Albucore, comparing them against other popular libraries such as OpenCV, NumPy, and TorchVision.
+This benchmark suite evaluates the performance of various image processing operations implemented in Algocore, comparing them against other popular libraries such as OpenCV, NumPy, and TorchVision.
 
 ## Overview
 
-Albucore is a high-performance image processing library designed for efficiency and ease of use. This benchmark aims to quantify its performance across a range of common image operations, providing insights into its strengths and areas for potential optimization.
+Algocore is a high-performance image processing library designed for efficiency and ease of use. This benchmark aims to quantify its performance across a range of common image operations, providing insights into its strengths and areas for potential optimization.
 
 ## Requirements
 
 - Python 3.9+
-- Albucore
+- Algocore
 - NumPy
 - OpenCV (cv2)
 - PyTorch and TorchVision
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 Run the benchmark script from the root of the repo:
 
 ```bash
-python -m benchmark.albucore_benchmark.benchmark -d /path/to/image/directory -n 2000 -c 3 -t uint8 -r 5 -m
+python -m benchmark.algocore_benchmark.benchmark -d /path/to/image/directory -n 2000 -c 3 -t uint8 -r 5 -m
 ```
 
 Options:
@@ -55,7 +55,7 @@ The benchmark suite includes the following operations:
 7. Type Conversions (To/From Float)
 8. Flips (Horizontal, Vertical)
 
-Each operation is tested across different libraries (Albucore, OpenCV, NumPy, TorchVision) when applicable.
+Each operation is tested across different libraries (Algocore, OpenCV, NumPy, TorchVision) when applicable.
 
 ## Interpreting Results
 
@@ -67,7 +67,7 @@ The benchmark outputs results in the following formats:
 Key metrics to look for:
 
 - Images processed per second for each operation and library
-- Relative performance of Albucore compared to other libraries
+- Relative performance of Algocore compared to other libraries
 - Performance across different image types (uint8 vs float32)
 
 ## Notes

@@ -6,20 +6,20 @@ This directory contains various benchmarks for image processing operations, focu
 
 Our benchmark suite currently includes:
 
-1. Albucore Benchmark: Evaluates the performance of Albucore against other popular image processing libraries.
+1. Algocore Benchmark: Evaluates the performance of Algocore against other popular image processing libraries.
 2. StringZilla LUT vs cv2.LUT Benchmark: Compares the performance of StringZilla's LUT implementation against OpenCV's cv2.LUT function.
 
 These benchmarks are designed to provide insights into the performance characteristics of different image processing approaches across various operations and image types.
 
 ## Benchmark Suites
 
-### 1. Albucore Benchmark
+### 1. Algocore Benchmark
 
-Located in: `./albucore_benchmark/`
+Located in: `./algocore_benchmark/`
 
-This suite compares Albucore's performance against OpenCV, NumPy, and TorchVision for a wide range of image processing operations.
+This suite compares Algocore's performance against OpenCV, NumPy, and TorchVision for a wide range of image processing operations.
 
-[More details](./albucore_benchmark/README.md)
+[More details](./algocore_benchmark/README.md)
 
 ### 2. StringZilla LUT vs cv2.LUT Benchmark
 

@@ -37,7 +37,7 @@ import numpy as np  # important to do it after these env variables
 rng = np.random.default_rng()
 
 
-DEFAULT_BENCHMARKING_LIBRARIES = ["albucore", "lut", "opencv", "numpy", "simsimd"]
+DEFAULT_BENCHMARKING_LIBRARIES = ["algocore", "lut", "opencv", "numpy", "simsimd"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -73,7 +73,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def get_package_versions() -> dict[str, str]:
-    packages = ["albucore", "opencv-python-headless", "numpy", "torchvision"]
+    packages = ["algocore", "opencv-python-headless", "numpy", "torchvision"]
     package_versions = {"Python": sys.version}
     for package in packages:
         try:
@@ -86,7 +86,7 @@ def get_package_versions() -> dict[str, str]:
 class BenchmarkTest(ABC):
     # Direct mapping of library names to their transform method names
     LIBRARY_ATTR_MAP: dict[str, str] = {
-        "albucore": "albucore_transform",
+        "algocore": "algocore_transform",
         "opencv": "opencv_transform",
         "numpy": "numpy_transform",
         "lut": "lut_transform",
@@ -100,7 +100,7 @@ class BenchmarkTest(ABC):
         self.img_type = None
 
     @abstractmethod
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
         pass
 
     @abstractmethod
@@ -123,8 +123,8 @@ class BenchmarkTest(ABC):
     def __str__(self) -> str:
         return self.__class__.__name__
 
-    def albucore(self, img: np.ndarray) -> np.ndarray:
-        return self.albucore_transform(img)
+    def algocore(self, img: np.ndarray) -> np.ndarray:
+        return self.algocore_transform(img)
 
     def opencv(self, img: np.ndarray) -> np.ndarray:
         return clip(self.opencv_transform(img), img.dtype)
@@ -168,23 +168,23 @@ class MultiplyConstant(BenchmarkTest):
         super().__init__(num_channels)
         self.multiplier = 1.5
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply(img, self.multiplier)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.multiply(img, self.multiplier)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply_numpy(img, self.multiplier)
+        return algocore.multiply_numpy(img, self.multiplier)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray | None:
-        return albucore.multiply_opencv(img, self.multiplier)
+        return algocore.multiply_opencv(img, self.multiplier)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply_lut(img, self.multiplier, inplace=False)
+        return algocore.multiply_lut(img, self.multiplier, inplace=False)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torch.mul(img, self.multiplier)
 
     def simsimd_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply_by_constant_simsimd(img, self.multiplier)
+        return algocore.multiply_by_constant_simsimd(img, self.multiplier)
 
 
 class MultiplyVector(BenchmarkTest):
@@ -193,17 +193,17 @@ class MultiplyVector(BenchmarkTest):
         self.multiplier = rng.uniform(0.5, 2, num_channels).astype(np.float32)
         self.torch_multiplier = torch.from_numpy(self.multiplier).view(-1, 1, 1)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply(img, self.multiplier)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.multiply(img, self.multiplier)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply_numpy(img, self.multiplier)
+        return algocore.multiply_numpy(img, self.multiplier)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply_opencv(img, self.multiplier)
+        return algocore.multiply_opencv(img, self.multiplier)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.multiply_lut(img, self.multiplier, inplace=False)
+        return algocore.multiply_lut(img, self.multiplier, inplace=False)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torch.mul(img, self.torch_multiplier)
@@ -215,17 +215,17 @@ class MultiplyArray(BenchmarkTest):
 
         self.boundaries = (0.9, 1.1)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
         multiplier = rng.uniform(self.boundaries[0], self.boundaries[1], img.shape)
-        return albucore.multiply(img, multiplier)
+        return algocore.multiply(img, multiplier)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
         multiplier = rng.uniform(self.boundaries[0], self.boundaries[1], img.shape)
-        return albucore.multiply_numpy(img, multiplier)
+        return algocore.multiply_numpy(img, multiplier)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
         multiplier = rng.uniform(self.boundaries[0], self.boundaries[1], img.shape)
-        return albucore.multiply_opencv(img, multiplier)
+        return algocore.multiply_opencv(img, multiplier)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         multiplier = rng.uniform(self.boundaries[0], self.boundaries[1], img.shape)
@@ -237,23 +237,23 @@ class AddConstant(BenchmarkTest):
         super().__init__(num_channels)
         self.value = 2.5
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add(img, self.value)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.add(img, self.value)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_numpy(img, self.value)
+        return algocore.add_numpy(img, self.value)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray | None:
-        return albucore.add_opencv(img, self.value)
+        return algocore.add_opencv(img, self.value)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_lut(img, self.value, inplace=False)
+        return algocore.add_lut(img, self.value, inplace=False)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torch.add(img, self.value)
 
     def simsimd_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_constant_simsimd(img, self.value)
+        return algocore.add_constant_simsimd(img, self.value)
 
 
 class AddVector(BenchmarkTest):
@@ -262,17 +262,17 @@ class AddVector(BenchmarkTest):
         self.value = rng.uniform(0, 255, [num_channels]).astype(np.float32)
         self.torch_value = torch.from_numpy(self.value).view(-1, 1, 1)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add(img, self.value)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.add(img, self.value)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_numpy(img, self.value)
+        return algocore.add_numpy(img, self.value)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_opencv(img, self.value)
+        return algocore.add_opencv(img, self.value)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_lut(img, self.value, inplace=False)
+        return algocore.add_lut(img, self.value, inplace=False)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torch.add(img, self.torch_value)
@@ -282,20 +282,20 @@ class AddArray(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_array(img, img.copy())
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.add_array(img, img.copy())
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_numpy(img, img.copy())
+        return algocore.add_numpy(img, img.copy())
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_opencv(img, img.copy())
+        return algocore.add_opencv(img, img.copy())
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torch.add(img, img.clone())
 
     def simsimd_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_array_simsimd(img, img.copy())
+        return algocore.add_array_simsimd(img, img.copy())
 
 
 class Normalize(BenchmarkTest):
@@ -305,17 +305,17 @@ class Normalize(BenchmarkTest):
         self.mean = rng.uniform(boundaries[0], boundaries[1], num_channels)
         self.denominator = rng.uniform(boundaries[0], boundaries[1], num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize(img, self.denominator, self.mean)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.normalize(img, self.denominator, self.mean)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_numpy(img, self.denominator, self.mean)
+        return algocore.normalize_numpy(img, self.denominator, self.mean)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_opencv(img, self.denominator, self.mean)
+        return algocore.normalize_opencv(img, self.denominator, self.mean)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_lut(img, self.denominator, self.mean)
+        return algocore.normalize_lut(img, self.denominator, self.mean)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torchf.normalize(img.float(), self.mean, self.denominator)
@@ -325,17 +325,17 @@ class NormalizePerImage(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image(img, "image")
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.normalize_per_image(img, "image")
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_numpy(img, "image")
+        return algocore.normalize_per_image_numpy(img, "image")
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_opencv(img, "image")
+        return algocore.normalize_per_image_opencv(img, "image")
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_lut(img, "image")
+        return algocore.normalize_per_image_lut(img, "image")
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         eps = 1e-4
@@ -348,17 +348,17 @@ class NormalizePerImagePerChannel(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image(img, "image_per_channel")
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.normalize_per_image(img, "image_per_channel")
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_numpy(img, "image_per_channel")
+        return algocore.normalize_per_image_numpy(img, "image_per_channel")
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_opencv(img, "image_per_channel")
+        return algocore.normalize_per_image_opencv(img, "image_per_channel")
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_lut(img, "image_per_channel")
+        return algocore.normalize_per_image_lut(img, "image_per_channel")
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         eps = 1e-4
@@ -376,17 +376,17 @@ class NormalizeMinMax(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image(img, "min_max")
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.normalize_per_image(img, "min_max")
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_numpy(img, "min_max")
+        return algocore.normalize_per_image_numpy(img, "min_max")
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_opencv(img, "min_max")
+        return algocore.normalize_per_image_opencv(img, "min_max")
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_lut(img, "min_max")
+        return algocore.normalize_per_image_lut(img, "min_max")
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         eps = 1e-4
@@ -398,17 +398,17 @@ class NormalizeMinMaxPerChannel(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image(img, "min_max_per_channel")
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.normalize_per_image(img, "min_max_per_channel")
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_numpy(img, "min_max_per_channel")
+        return algocore.normalize_per_image_numpy(img, "min_max_per_channel")
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_opencv(img, "min_max_per_channel")
+        return algocore.normalize_per_image_opencv(img, "min_max_per_channel")
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.normalize_per_image_lut(img, "min_max_per_channel")
+        return algocore.normalize_per_image_lut(img, "min_max_per_channel")
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         eps = 1e-4
@@ -424,17 +424,17 @@ class PowerConstant(BenchmarkTest):
         super().__init__(num_channels)
         self.exponent = 1.1
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.power(img, self.exponent)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.power(img, self.exponent)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.power_numpy(img, self.exponent)
+        return algocore.power_numpy(img, self.exponent)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.power_opencv(img, self.exponent)
+        return algocore.power_opencv(img, self.exponent)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.power_lut(img, self.exponent)
+        return algocore.power_lut(img, self.exponent)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torch.pow(img, self.exponent)
@@ -446,23 +446,23 @@ class AddWeighted(BenchmarkTest):
         self.weight1 = 0.4
         self.weight2 = 0.6
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_weighted(img, self.weight1, img.copy(), self.weight2)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.add_weighted(img, self.weight1, img.copy(), self.weight2)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_weighted_numpy(img, self.weight1, img.copy(), self.weight2)
+        return algocore.add_weighted_numpy(img, self.weight1, img.copy(), self.weight2)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_weighted_opencv(img, self.weight1, img.copy(), self.weight2)
+        return algocore.add_weighted_opencv(img, self.weight1, img.copy(), self.weight2)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_weighted_lut(img, self.weight1, img.copy(), self.weight2)
+        return algocore.add_weighted_lut(img, self.weight1, img.copy(), self.weight2)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return img * self.weight1 + img.clone() * self.weight2
 
     def simsimd_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.add_weighted_simsimd(img, self.weight1, img.copy(), self.weight2)
+        return algocore.add_weighted_simsimd(img, self.weight1, img.copy(), self.weight2)
 
 
 class MultiplyAdd(BenchmarkTest):
@@ -470,21 +470,21 @@ class MultiplyAdd(BenchmarkTest):
         super().__init__(num_channels)
         self.factor = 1.2
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
         value = MAX_VALUES_BY_DTYPE[img.dtype] / 10.0
-        return albucore.multiply_add(img, self.factor, value)
+        return algocore.multiply_add(img, self.factor, value)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
         value = MAX_VALUES_BY_DTYPE[img.dtype] / 10.0
-        return albucore.multiply_add_numpy(img, self.factor, value)
+        return algocore.multiply_add_numpy(img, self.factor, value)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
         value = MAX_VALUES_BY_DTYPE[img.dtype] / 10.0
-        return albucore.multiply_add_opencv(img, self.factor, value)
+        return algocore.multiply_add_opencv(img, self.factor, value)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
         value = MAX_VALUES_BY_DTYPE[img.dtype] / 10.0
-        return albucore.multiply_add_lut(img, self.factor, value, inplace=False)
+        return algocore.multiply_add_lut(img, self.factor, value, inplace=False)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return img * self.factor + 13
@@ -501,17 +501,17 @@ class ToFloat(BenchmarkTest):
             return False
         return super().is_supported_by(library)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.to_float(img, self.max_value)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.to_float(img, self.max_value)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.to_float_numpy(img, self.max_value)
+        return algocore.to_float_numpy(img, self.max_value)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.to_float_opencv(img, self.max_value)
+        return algocore.to_float_opencv(img, self.max_value)
 
     def lut_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.to_float_lut(img, self.max_value)
+        return algocore.to_float_lut(img, self.max_value)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return (img / self.max_value).to(torch.float32)
@@ -528,14 +528,14 @@ class FromFloat(BenchmarkTest):
             return False
         return super().is_supported_by(library)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.from_float(img, self.dtype)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.from_float(img, self.dtype)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.from_float_numpy(img, self.dtype)
+        return algocore.from_float_numpy(img, self.dtype)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.from_float_opencv(img, self.dtype)
+        return algocore.from_float_opencv(img, self.dtype)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return (img * MAX_VALUES_BY_DTYPE[self.dtype]).to(torch.uint8)
@@ -545,14 +545,14 @@ class HorizontalFlip(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.hflip(img)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.hflip(img)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.hflip_numpy(img)
+        return algocore.hflip_numpy(img)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.hflip_cv2(img)
+        return algocore.hflip_cv2(img)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torchf.hflip(img)
@@ -562,14 +562,14 @@ class VerticalFlip(BenchmarkTest):
     def __init__(self, num_channels: int) -> None:
         super().__init__(num_channels)
 
-    def albucore_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.vflip(img)
+    def algocore_transform(self, img: np.ndarray) -> np.ndarray:
+        return algocore.vflip(img)
 
     def numpy_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.vflip_numpy(img)
+        return algocore.vflip_numpy(img)
 
     def opencv_transform(self, img: np.ndarray) -> np.ndarray:
-        return albucore.vflip_cv2(img)
+        return algocore.vflip_cv2(img)
 
     def torchvision_transform(self, img: torch.Tensor) -> torch.Tensor:
         return torchf.vflip(img)

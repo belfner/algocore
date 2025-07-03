@@ -80,7 +80,7 @@ for ch in "${channels[@]}"; do
     for type in "${types[@]}"; do
         echo "Running benchmark for $ch channels, type $type"
         # Command to run your program, using the provided data directory
-        python -m benchmark.albucore_benchmark.benchmark \
+        python -m benchmark.algocore_benchmark.benchmark \
             --num_channels "$ch" \
             --img_type "$type" \
             --markdown \

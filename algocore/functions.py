@@ -8,8 +8,8 @@ import numpy as np
 import simsimd as ss
 import stringzilla as sz
 
-from albucore.decorators import contiguous, preserve_channel_dim
-from albucore.utils import (
+from algocore.decorators import contiguous, preserve_channel_dim
+from algocore.utils import (
     MAX_OPENCV_WORKING_CHANNELS,
     MAX_VALUES_BY_DTYPE,
     MONO_CHANNEL_DIMENSIONS,
