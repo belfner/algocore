@@ -15,8 +15,8 @@ MIN_OPENCV_VERSION = "4.9.0.80"
 
 CHOOSE_INSTALL_REQUIRES = [
     (
-        (f"opencv-python>={MIN_OPENCV_VERSION}", f"opencv-contrib-python>={MIN_OPENCV_VERSION}", f"opencv-contrib-python-headless>={MIN_OPENCV_VERSION}"),
-        f"opencv-python-headless>={MIN_OPENCV_VERSION}",
+        (f"opencv-python>={MIN_OPENCV_VERSION}",),
+        f"opencv-python>={MIN_OPENCV_VERSION}",
     ),
 ]
 
